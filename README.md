@@ -2,7 +2,7 @@
 
 #Desenvolvedores
 Thiago Okada Aoki RA:2002282<br>
-Guilherme Dorce de Britto RA:1991866(https://github.com/dorce2002)
+Guilherme Dorce de Britto RA:1991866
 ## Introdução
 
 Este é um projeto de e-commerce desenvolvido com Vue.js, que simula uma loja virtual com diversas funcionalidades modernas de uma aplicação real. O objetivo é oferecer uma experiência de usuário fluida e organizada, focada na exibição e navegação de produtos.
