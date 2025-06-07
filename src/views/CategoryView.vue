@@ -6,7 +6,10 @@
         <li v-for="cat in allCategories" :key="cat.slug" class="mb-2">
           <router-link
             :to="{ name: 'CategoryView', params: { category: cat.slug } }"
-            :class="{'font-bold text-blue-600': selectedCategorySlug === cat.slug, 'text-gray-700 hover:text-blue-600': selectedCategorySlug !== cat.slug}"
+            :class="{
+              'font-bold text-blue-600': selectedCategorySlug === cat.slug,
+              'text-gray-700 hover:text-blue-600': selectedCategorySlug !== cat.slug
+            }"
             class="block p-2 rounded hover:bg-blue-50 capitalize"
             @click="updateCategory(cat.slug)"
           >
@@ -17,8 +20,9 @@
     </aside>
 
     <main class="md:w-3/4">
-      <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold capitalize">{{ formatCategory(selectedCategoryName) }}</h2>
+      <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6">
+        <h2 class="text-2xl font-bold capitalize mb-2 sm:mb-0">{{ formatCategory(selectedCategoryName) }}</h2>
+        
         <div class="flex items-center space-x-4">
           <label for="sort" class="text-gray-700">Ordenar por:</label>
           <select id="sort" v-model="sortBy" @change="sortProducts" class="border rounded px-3 py-1">
@@ -35,6 +39,7 @@
       <div v-else-if="filteredProducts.length === 0" class="text-center text-gray-500">
         Nenhum produto encontrado nesta categoria.
       </div>
+      
       <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <div v-for="product in filteredProducts" :key="product.id" class="bg-white shadow rounded-lg p-4">
           <router-link :to="{ name: 'ProductDetail', params: { id: product.id } }">
@@ -51,117 +56,148 @@
 
 <script setup>
 import { ref, onMounted, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import axios from 'axios';
+import { useRoute, useRouter } from 'vue-router'; 
+import axios from 'axios'; 
 
-const route = useRoute();
-const router = useRouter();
+const route = useRoute(); 
+const router = useRouter(); 
 
-const products = ref([]);
+const products = ref([]); 
 const filteredProducts = ref([]);
-const allCategories = ref([]); // Para exibir as outras categorias
-const selectedCategorySlug = ref('');
-const selectedCategoryName = ref('');
+const allCategories = ref([]); 
+const selectedCategorySlug = ref(''); 
+const selectedCategoryName = ref(''); 
 const sortBy = ref('default');
-const loading = ref(true);
+const loading = ref(true); 
 
+/**
+ * Busca produtos de uma categoria específica na API.
+ * @param {string} categorySlug - O slug da categoria a ser buscada.
+ */
 const fetchProductsByCategory = async (categorySlug) => {
-  console.log("Chamando fetchProductsByCategory com slug:", categorySlug); // DEBUG: Verificar o slug
+  console.log("Chamando fetchProductsByCategory com slug:", categorySlug); // DEBUG
   loading.value = true;
   try {
-    // API endpoint para buscar produtos por categoria
+    // Faz a requisição GET para a API para obter produtos por categoria
     const res = await axios.get(`https://dummyjson.com/products/category/${categorySlug}`);
-    console.log("Resposta da API de produtos por categoria:", res.data); // DEBUG: Verificar a resposta
-    
-    // A DummyJSON API retorna um objeto com uma propriedade 'products' que é um array
+    console.log("Resposta da API de produtos por categoria:", res.data); // DEBUG
+
+    // Verifica se a resposta da API contém um array de produtos válido
     if (res.data && Array.isArray(res.data.products)) {
-      products.value = res.data.products;
+      products.value = res.data.products; 
     } else {
       console.warn("Estrutura da resposta da API inesperada ou sem produtos.");
       products.value = [];
     }
-    
-    applySorting(); // Aplica a ordenação inicial após carregar
+
+    applySorting(); // Aplica a ordenação inicial após carregar os produtos
   } catch (error) {
     console.error(`Erro ao buscar produtos da categoria ${categorySlug}:`, error);
-    products.value = [];
+    products.value = []; 
   } finally {
-    loading.value = false;
+    loading.value = false; // Define o estado de carregamento como falso, independentemente do sucesso ou erro
   }
 };
 
+/**
+ * Busca todas as categorias disponíveis na API para preencher a barra lateral.
+ */
 const fetchAllCategories = async () => {
   try {
     const res = await axios.get('https://dummyjson.com/products/categories');
-    console.log("Resposta da API de todas as categorias:", res.data); // DEBUG: Verificar todas as categorias
-    // Mapeia para um formato { slug, name } se a API retornar objetos
-    if (Array.isArray(res.data) && res.data.length > 0 && typeof res.data[0] === 'object') {
+    console.log("Resposta da API de todas as categorias:", res.data); // DEBUG
+
+    // Adaptação para a estrutura da API dummyjson.com, que pode retornar slugs ou objetos com name/slug
+    if (Array.isArray(res.data) && res.data.length > 0 && typeof res.data[0] === 'object' && res.data[0] !== null) {
       allCategories.value = res.data.map(item => ({ slug: item.slug || item.name, name: item.name || item.slug }));
+    } else if (Array.isArray(res.data)) {
+        allCategories.value = res.data.map(item => ({ slug: item, name: item }));
     } else {
-      // Se for array de strings, crie objetos simples
-      allCategories.value = res.data.map(item => ({ slug: item, name: item }));
+        console.warn("Formato inesperado para categorias:", res.data);
+        allCategories.value = [];
     }
   } catch (error) {
     console.error("Erro ao buscar todas as categorias:", error);
   }
 };
 
+/**
+ * Formata o texto da categoria (ex: 'smartphones' -> 'Smartphones', 'laptops' -> 'Laptops').
+ * Remove hífens e capitaliza a primeira letra.
+ * @param {string} catText - O slug ou nome da categoria.
+ * @returns {string} O nome da categoria formatado.
+ */
 const formatCategory = (catText) => {
   if (!catText) return '';
-  return catText.charAt(0).toUpperCase() + catText.slice(1).replace(/-/g, ' ');
+  // Substitui hífens por espaços e capitaliza a primeira letra de cada palavra
+  return catText.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 };
 
+
+/**
+ * Aplica a ordenação aos produtos exibidos com base na opção selecionada.
+ */
 const applySorting = () => {
-  let sorted = [...products.value]; // Cria uma cópia para não modificar o array original
+  let sorted = [...products.value]; // Cria uma cópia do array de produtos para não modificar o original
 
   if (sortBy.value === 'price_asc') {
-    sorted.sort((a, b) => a.price - b.price);
+    sorted.sort((a, b) => a.price - b.price); // Ordena por preço crescente
   } else if (sortBy.value === 'price_desc') {
-    sorted.sort((a, b) => b.price - a.price);
+    sorted.sort((a, b) => b.price - a.price); // Ordena por preço decrescente
   } else if (sortBy.value === 'name_asc') {
-    sorted.sort((a, b) => a.title.localeCompare(b.title));
+    sorted.sort((a, b) => a.title.localeCompare(b.title)); // Ordena por nome (A-Z)
   } else if (sortBy.value === 'name_desc') {
-    sorted.sort((a, b) => b.title.localeCompare(a.title));
+    sorted.sort((a, b) => b.title.localeCompare(a.title)); // Ordena por nome (Z-A)
   }
-  filteredProducts.value = sorted;
+  filteredProducts.value = sorted; // Atualiza a lista de produtos filtrados/ordenados
 };
 
+/**
+ * Chamada quando a opção de ordenação é alterada.
+ */
 const sortProducts = () => {
   applySorting();
 };
 
+/**
+ * Atualiza a categoria selecionada e navega para a rota correspondente.
+ * Esta função agora é um wrapper para o router.push.
+ * @param {string} newSlug - O novo slug da categoria selecionada.
+ */
 const updateCategory = (newSlug) => {
-  // Esta função é chamada quando você clica em uma categoria na barra lateral.
-  // Ela já dispara a navegação via router-link, e o watcher na rota
-  // é quem realmente aciona a busca de produtos.
-  // Não precisamos fazer nada aqui além do router-link.
+    router.push({ name: 'CategoryView', params: { category: newSlug } });
 };
 
-// Observa mudanças na rota para carregar produtos da nova categoria
+// Observa mudanças no parâmetro 'category' da rota
 watch(() => route.params.category, (newCategorySlug) => {
-  console.log("Watcher detectou mudança de categoria para:", newCategorySlug); // DEBUG: Verificar se o watcher está disparando
+  console.log("Watcher detectou mudança de categoria para:", newCategorySlug); // DEBUG
   if (newCategorySlug) {
-    selectedCategorySlug.value = newCategorySlug;
-    // Encontra o nome completo da categoria para exibição no título da página
+    selectedCategorySlug.value = newCategorySlug; // Atualiza o slug da categoria selecionada
+    // Encontra o nome completo da categoria no array de todas as categorias
     const categoryFound = allCategories.value.find(cat => cat.slug === newCategorySlug);
-    selectedCategoryName.value = categoryFound ? categoryFound.name : newCategorySlug;
-    fetchProductsByCategory(newCategorySlug);
-  } else {
-    // Se, por algum motivo, a categoria for nula ou indefinida
-    selectedCategorySlug.value = '';
-    selectedCategoryName.value = 'Todos os Produtos'; // Ou outro texto padrão
+    selectedCategoryName.value = categoryFound ? categoryFound.name : newCategorySlug; 
+    fetchProductsByCategory(newCategorySlug); // Busca os produtos da nova categoria
+  } 
+  else {
+    // Caso não haja um slug de categoria na rota (ex: rota de "todas as categorias")
+    selectedCategorySlug.value = ''; // Limpa a categoria selecionada
+    selectedCategoryName.value = 'Todos os Produtos'; // Define um nome padrão
     products.value = []; // Limpa os produtos
-    loading.value = false;
+    loading.value = false; // Desativa o carregamento
   }
-}, { immediate: true }); // immediate: true executa o watcher na montagem inicial
+}, { immediate: true }); // Executa o watcher imediatamente na montagem do componente
 
+// Hook de ciclo de vida: chamado após o componente ser montado no DOM
 onMounted(() => {
-  console.log("CategoryView montado."); // DEBUG: Verificar se onMounted está rodando
-  fetchAllCategories();
-  // A busca inicial da categoria é feita pelo watcher graças a { immediate: true }
+  console.log("CategoryView montado."); // DEBUG
+  fetchAllCategories(); // Busca todas as categorias para preencher a barra lateral
+  // A busca inicial de produtos por categoria já é tratada pelo watcher com `immediate: true`.
 });
 </script>
 
 <style scoped>
-/* Adicione aqui qualquer estilo específico para esta view */
+/*
+  Você pode adicionar estilos específicos para este componente aqui,
+  mas para a responsividade, o Tailwind CSS já faz a maior parte do trabalho.
+*/
 </style>

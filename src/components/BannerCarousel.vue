@@ -1,14 +1,28 @@
 <template>
-  <div class="banner-carousel relative overflow-hidden rounded-md shadow-md">
-    <div class="carousel-wrapper flex transition-transform duration-500 ease-in-out" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
-      <div v-for="(image, index) in images" :key="index" class="carousel-slide w-full flex-shrink-0">
-        <img :src="image" :alt="`Banner ${index + 1}`" class="w-full h-full object-cover block"> </div>
+  <div class="banner-carousel relative overflow-hidden rounded-md shadow-md w-full max-w-screen-xl mx-auto h-[350px] sm:h-[300px] md:h-[350px]">
+    <div
+      class="carousel-wrapper flex transition-transform duration-500 ease-in-out"
+      :style="{ transform: `translateX(-${currentIndex * 100}%)` }"
+    >
+      <div
+        v-for="(image, index) in images"
+        :key="index"
+        class="carousel-slide w-full flex-shrink-0"
+      >
+        <img :src="image" :alt="`Banner ${index + 1}`" class="w-full h-full object-cover block" />
+      </div>
     </div>
 
-    <button @click="prevSlide" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-gray-300 bg-opacity-50 hover:bg-opacity-70 text-gray-800 font-bold py-2 px-3 rounded-full z-10">
+    <button
+      @click="prevSlide"
+      class="absolute top-1/2 left-2 sm:left-4 transform -translate-y-1/2 bg-gray-300 bg-opacity-50 hover:bg-opacity-70 text-gray-800 font-bold py-2 px-3 rounded-full z-10"
+    >
       ‹
     </button>
-    <button @click="nextSlide" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-gray-300 bg-opacity-50 hover:bg-opacity-70 text-gray-800 font-bold py-2 px-3 rounded-full z-10">
+    <button
+      @click="nextSlide"
+      class="absolute top-1/2 right-2 sm:right-4 transform -translate-y-1/2 bg-gray-300 bg-opacity-50 hover:bg-opacity-70 text-gray-800 font-bold py-2 px-3 rounded-full z-10"
+    >
       ›
     </button>
 
@@ -17,7 +31,10 @@
         v-for="(dot, index) in images.length"
         :key="dot"
         @click="goToSlide(index)"
-        :class="{ 'bg-indigo-500': currentIndex === index, 'bg-gray-300': currentIndex !== index }"
+        :class="{
+          'bg-indigo-500': currentIndex === index,
+          'bg-gray-300': currentIndex !== index
+        }"
         class="w-3 h-3 rounded-full cursor-pointer focus:outline-none"
       ></button>
     </div>
@@ -28,10 +45,10 @@
 import { ref } from 'vue';
 
 const images = ref([
-  new URL('../assets/imagens/banner1.png', import.meta.url).href, // Caminho corrigido
-  new URL('../assets/imagens/banner02.png', import.meta.url).href, // Caminho corrigido
-  new URL('../assets/imagens/banner03.png', import.meta.url).href, // Caminho corrigido
-  new URL('../assets/imagens/banner04.png', import.meta.url).href  // Caminho corrigido
+  new URL('../assets/imagens/banner1.png', import.meta.url).href,
+  new URL('../assets/imagens/banner02.png', import.meta.url).href,
+  new URL('../assets/imagens/banner03.png', import.meta.url).href,
+  new URL('../assets/imagens/banner04.png', import.meta.url).href
 ]);
 
 const currentIndex = ref(0);
@@ -52,25 +69,23 @@ const goToSlide = (index) => {
 
 <style scoped>
 .banner-carousel {
-  /* Tamanho total do carrossel */
-  max-width: 70%; /* Ocupa a largura total do contêiner pai */
-  height: 350px; /* Altura fixa para o carrossel, ajustável */
-  margin: 0 auto; /* Centraliza o banner */
-}
-.carousel-wrapper {
-  width: calc(100%); /* Ajuste o número de imagens aqui */
-  height: 100%; /* Faz o wrapper ocupar a altura total do carrossel */
-}
-.carousel-slide {
-  width: 100%;
-  height: 100%; /* Faz o slide ocupar a altura total do carrossel */
+  margin: 0 auto;
 }
 
-/* Ajuste da imagem para preencher o slide */
+.carousel-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-slide {
+  width: 100%;
+  height: 100%;
+}
+
 .carousel-slide img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Garante que a imagem cubra toda a área, cortando se necessário */
-  display: block; /* Remove possíveis espaços extras */
+  object-fit: cover;
+  display: block;
 }
 </style>
