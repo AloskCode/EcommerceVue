@@ -87,7 +87,7 @@ Antes de começar, você precisa ter instalado em sua máquina:
 - [Node.js](https://nodejs.org/) (versão recomendada: 16+)
 - [npm](https://www.npmjs.com/) ou [yarn](https://yarnpkg.com/)
 
-### ▶️ Passos
+### Instruções
 
 Clonar o repositório:
 
