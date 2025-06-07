@@ -89,12 +89,12 @@ Antes de começar, você precisa ter instalado em sua máquina:
 
 ### ▶️ Passos
 
-1. Clone o repositório:
+Clonar o repositório:
 
 ```bash
 git clone 'https://github.com/AloskCode/EcommerceVue'
 cd magistore
-Instale as dependências:
+Instalar as dependências:
 
 npm install
 # ou
