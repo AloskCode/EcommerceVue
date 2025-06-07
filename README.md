@@ -104,7 +104,7 @@ Execute o servidor de desenvolvimento:
 npm run dev
 # ou
 yarn dev
-A aplicação estará disponível em http://localhost:5173
+A aplicação estará disponível em http://localhost:5173/
 
 ```
 
