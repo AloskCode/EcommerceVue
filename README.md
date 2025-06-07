@@ -104,7 +104,7 @@ Execute o servidor de desenvolvimento:
 npm run dev
 # ou
 yarn dev
-A aplicação estará disponível em http://localhost:5173/
+O site estará aberto em http://localhost:5173/
 
 ```
 
@@ -112,4 +112,28 @@ A aplicação estará disponível em http://localhost:5173/
 https://www.youtube.com/watch?v=nBH_yZLRM3w
 
 # Prints do site
+
+Página Inicial :Home
+![MenuPrincipal](https://github.com/user-attachments/assets/4e297416-ad4f-4942-a8eb-f4135784b119)
+
+Funcionalidade de Ordenação de produtos
+
+![Categorias](https://github.com/user-attachments/assets/eeeedc51-af07-4014-9487-8b3b78d15e8b)
+
+Categorias 
+
+![Categorias2](https://github.com/user-attachments/assets/06bb6eb8-8ea5-4d9f-abfb-a729b2f63fc3)
+
+Outras Categorias
+
+![Categorias3](https://github.com/user-attachments/assets/71b88d7a-e0ec-4fdf-bc1d-c816074c4671)
+
+Pagina do Produto
+
+![DetalhesProduto](https://github.com/user-attachments/assets/9548c162-cb99-466c-995d-01b160ad9862)
+
+Carrinho
+
+![Carrinho](https://github.com/user-attachments/assets/9bfe4c88-3cf0-4946-b9a2-e0d83a7fbbce)
+
 
