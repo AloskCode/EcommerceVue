@@ -96,13 +96,8 @@ cd EccomerceVue
 Instalar as dependências:
 
 npm install
-# ou
-yarn install
 Execute o servidor de desenvolvimento:
-
 npm run dev
-# ou
-yarn dev
 O site estará aberto em http://localhost:5173/
 
 ```
