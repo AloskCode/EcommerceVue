@@ -84,7 +84,7 @@ Este é um projeto de uma loja virtual construída com as tecnologias modernas d
 Antes de começar, você precisa ter instalado em sua máquina:
 
 - [Node.js](https://nodejs.org/) 
-- [npm](https://www.npmjs.com/) ou [yarn](https://yarnpkg.com/)
+- [npm](https://www.npmjs.com/) 
 
 ### Instruções
 
