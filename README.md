@@ -110,3 +110,6 @@ A aplicação estará disponível em http://localhost:5173/
 
 # Video Explicativo 
 https://www.youtube.com/watch?v=nBH_yZLRM3w
+
+# Prints do site
+
