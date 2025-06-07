@@ -83,7 +83,7 @@ Este é um projeto de uma loja virtual construída com as tecnologias modernas d
 
 Antes de começar, você precisa ter instalado em sua máquina:
 
-- [Node.js](https://nodejs.org/) (versão recomendada: 16+)
+- [Node.js](https://nodejs.org/) 
 - [npm](https://www.npmjs.com/) ou [yarn](https://yarnpkg.com/)
 
 ### Instruções
@@ -92,7 +92,7 @@ Clonar o repositório:
 
 ```bash
 git clone 'https://github.com/AloskCode/EcommerceVue'
-cd EccomerceVue
+cd EcommerceVue
 Instalar as dependências:
 
 npm install
