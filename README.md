@@ -92,11 +92,21 @@ Antes de começar, você precisa ter instalado em sua máquina:
 1. Clone o repositório:
 
 ```bash
-git clone [https://github.com/seu-usuario/seu-repositorio.git](https://github.com/AloskCode/EcommerceVue)
-cd seu-repositorio
+git clone 'https://github.com/AloskCode/EcommerceVue'
+cd magistore
+Instale as dependências:
+
 npm install
 # ou
-yarn
+yarn install
+Execute o servidor de desenvolvimento:
+
+npm run dev
+# ou
+yarn dev
+A aplicação estará disponível em http://localhost:5173
+
+```
 
 # Video Explicativo 
 https://www.youtube.com/watch?v=nBH_yZLRM3w
