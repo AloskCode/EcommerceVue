@@ -1,5 +1,8 @@
 # ecommerce
 
+#Desenvolvedores
+Thiago Okada Aoki RA:2002282
+Guilherme Dorce de Britto RA:1991866
 ## Introdução
 
 Este é um projeto de e-commerce desenvolvido com Vue.js, que simula uma loja virtual com diversas funcionalidades modernas de uma aplicação real. O objetivo é oferecer uma experiência de usuário fluida e organizada, focada na exibição e navegação de produtos.
@@ -51,7 +54,7 @@ src/
 └── main.js
 ```
 
-# 🛍️ Loja Online com Vue 3, Vite, TailwindCSS e Axios
+# Loja Eccomerce Online com Vue 3, Vite, TailwindCSS e Axios
 
 Este é um projeto de uma loja virtual construída com as tecnologias modernas do ecossistema frontend:
 
@@ -60,24 +63,24 @@ Este é um projeto de uma loja virtual construída com as tecnologias modernas d
 - **Axios** para consumo de API REST  
 - **TailwindCSS** para estilização moderna e responsiva  
 
-## 📦 Funcionalidades
+## Funcionalidades
 
-- 🏠 Página inicial com banners e produtos em destaque  
-- 🔍 Barra de busca de produtos  
-- 🧭 Navegação por categorias  
-- 🛒 Carrinho de compras com:
+- Página inicial com banners e produtos em destaque  
+- Barra de busca de produtos  
+- Navegação por categorias  
+- Carrinho de compras com:
   - Adição e remoção de produtos
   - Controle de quantidade
   - Cálculo do total
   - Botão de "Finalizar Compra"
-- 📄 Página de detalhes do produto  
-- 📱 Estilização responsiva com TailwindCSS  
+- Página de detalhes do produto  
+- Estilização responsiva com TailwindCSS  
 
 ---
 
-## 🚀 Como rodar o projeto localmente
+## Como rodar o projeto localmente
 
-### 🔧 Pré-requisitos
+### Pré-requisitos
 
 Antes de começar, você precisa ter instalado em sua máquina:
 
@@ -89,6 +92,11 @@ Antes de começar, você precisa ter instalado em sua máquina:
 1. Clone o repositório:
 
 ```bash
-git clone https://github.com/seu-usuario/seu-repositorio.git
+git clone [https://github.com/seu-usuario/seu-repositorio.git](https://github.com/AloskCode/EcommerceVue)
 cd seu-repositorio
+npm install
+# ou
+yarn
 
+# Video Explicativo 
+https://www.youtube.com/watch?v=nBH_yZLRM3w
