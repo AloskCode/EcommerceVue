@@ -33,7 +33,6 @@ src/
 │   ├── BannerCarousel.vue
 │   ├── CategoryBar.vue
 │   ├── Footer.vue
-│   ├── HelloWorld.vue
 │   ├── Navbar.vue
 │   ├── Pagination.vue
 │   ├── ProductCard.vue
@@ -93,7 +92,7 @@ Clonar o repositório:
 
 ```bash
 git clone 'https://github.com/AloskCode/EcommerceVue'
-cd magistore
+cd EccomerceVue
 Instalar as dependências:
 
 npm install
